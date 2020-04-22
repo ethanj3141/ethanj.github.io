@@ -9,7 +9,7 @@ pics = [
 
 var btn = document.querySelector("button");
 var img = document.querySelector("img");
-var counter = 1;
+var counter = 0;
 
 btn.addEventListener("click", function(){
 	if (counter === 6) {
