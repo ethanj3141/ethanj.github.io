@@ -1,0 +1,31 @@
+body {
+	font-family:Verdana,sans-serif;
+}
+
+.button {
+  background-color: green;
+  border: none;
+  color: white;
+  border:none;
+  padding:15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family:Verdana,sans-serif;
+  border-radius: 8px;
+  font-size:1.4em;
+  transition-duration: 0.4s;
+  margin-bottom: 20px;
+}
+
+.button:hover{
+	background-color: black;
+}
+
+#output {
+	width:750px;
+	height:200px;
+	border:thin solid #CC0000;
+	padding: 10px;
+}
+
