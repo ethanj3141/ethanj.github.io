@@ -1,0 +1,92 @@
+/*
+#120136 - Black
+#035aa6 - Dark Blue
+#40bad5 - Light Blue
+#fcbf1e - Yellow
+#fcd020 - A darker shade of yellow (I felt the contrast was too strong.)
+https://colorhunt.co/palette/180404
+(Some edits were made to the colors in actual usage to make the site look better.)
+*/
+
+.box {
+	height: 175px;
+	width: 175px;
+	background-color: #f7beff;
+	display:inline-block;
+	margin:10px;
+	vertical-align:top;
+	text-align:center;
+	line-height:175px;
+	font-size:150px;
+	color:#120136;
+	font-family:"Times New Roman", Arial, sans-serif;
+}
+
+.titletext{
+	text-align:center;
+	color:#120136;
+	font-family:Arial, Verdana, sans-serif;
+}
+
+h1.titletext{font-size:3em}
+p.titletext{font-size:2em}
+
+#main {
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	height:593px;
+	width:593px;
+	background-color:#035aa6;
+	padding: 10px;
+	
+}
+
+body {
+	background-color:#40ead5;
+}
+
+.hidden{
+	display:none;
+}
+
+.unhidden{
+	display:block;
+}
+
+#lightbox {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.5);
+}
+
+#x {
+	position:absolute;
+	top:10px;
+	right:10px;
+	width:30px;
+	height:30px;
+	z-index:2;
+}
+
+#positionMessage{
+	position:absolute;
+	top:45px;
+	left:0px;
+	width:100%;
+}
+
+#boundaryMessage{
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	width:600px;
+	height:250px;
+	background-color:rgba(255,255,255,0.9);
+	z-index:1;
+	padding:30px;
+	border:thick solid #120136;
+}
