@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Pong</title>
+		<link rel = "stylesheet" href = "pong.css">
+		<link rel='icon' href='favicon.ico' type='image/x-icon'/>
+	</head>
+	
+	<body>
+		
+		<div id = "header">
+			<h1 id = "title">Pong</h1>
+			<p class = "middle">First to 10 points! Control using W/S for the left paddle and the Up/Down Arrows for the right paddle.</p>
+			<h2 id = "left">Player 1: <span id = "score1">0</span> Points</h2>
+			<h3 class = "middle">
+				<span class = "button" onclick = "makeBall()">New Round</span> &nbsp;
+				<span class = "button" onclick = "playNow('')">Pause</span> &nbsp;
+				<span class = "button" onclick = "playNow('start')">Unpause</span> &nbsp;
+				<span class = "button" onclick = "endGame()">End Game</span>
+			</h3> 
+			<h2 id = "right">Player 2: <span id = "score2">0</span> Points</h2>
+		</div>
+		
+		<div id="gameBoard">
+			<div id="paddle1" class = "paddle">
+				
+			</div>
+		
+			<div id="ball">
+				
+			</div>
+			
+			<div id = "gameEnd">
+				
+			</div>
+			
+			<div id = "paddle2" class = "paddle">
+
+			</div>
+		</div>
+		<script src = "pong.js"></script>
+	</body>
+	
+</html>
