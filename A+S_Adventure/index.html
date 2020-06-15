@@ -7,6 +7,12 @@
 	</head>
 	
 	<body>
+		<h1>Albert and Simon's Slightly Eldritch Adventure</h1>
+		
+		<div id = "buttonPosition">
+			<span id = "restartButton" onclick = "endGame(false, true)">Restart Game</span>
+		</div>
+		
 		<div id = "gameBoard">
 		
 			<div></div>
@@ -43,8 +49,17 @@
 			
 		</div>
 		
-		<div class = "message" id = "lose">You Lose</div>
-		<div class = "message" id = "levelup">Next Level . . . </div>
+		
+		
+		<div class = "message" id = "lose">
+		Close Call! Spangler Teleports Everyone to Safety.
+		
+		<span class = "link" onclick = 'loadLevel()'>Click this for New Game</span>
+		</div>
+		
+		<div class = "message" id = "levelup">
+		Escape! Onward, Towards A Quality Bed!
+		</div>
 		
 		<script src = "javascript.js"></script>
 	</body>

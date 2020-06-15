@@ -1,9 +1,16 @@
-body {
-	background-color:black;
+h1 {
+	text-align:center;
+	font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif; 
+	margin: 2% auto;
 }
 
+body {
+	background-color:#ffffcc;
+	font-family:Verdana, sans-serif;
+}
 #gameBoard {
-	border: 1px solid black;
+	border: 3px solid black;
+	border-radius:7px;
 	display: grid;
 	grid-template-columns: 120px 120px 120px 120px 120px;
 	grid-template-rows: 120px 120px 120px 120px 120px;
@@ -13,10 +20,43 @@ body {
 	
 	margin-left:auto;
 	margin-right:auto;
+	margin-top:1.5%;
 }
 
 #gameBoard div {
 	background-color: #00EE00;
+}
+
+.instructions {
+	display:absolute;
+	
+	border:solid 2px black;
+	border-radius:13px;
+	padding:5px;
+	background-color:#ffffcc;
+	width:55%;
+	
+	margin: 1.75% auto;
+	
+	font-size:11px;
+	line-height: 1.6;
+}
+
+.instructions h1 {
+	font-size:28px;
+}
+
+#startlink {
+	display:absolute;
+	
+	border:solid 2px black;
+	border-radius:13px;
+	padding:5px;
+	background-color:#ffffcc;
+	width:55%;
+	
+	margin: 1.75% auto;
+	
 }
 
 .message {
@@ -26,15 +66,56 @@ body {
 	left:0px;
 	width:100%;
 	height:100%;
-	background-color:rgba(0,0,0,0.8);
+	background-color:rgba(0,0,0,1.0);
 	color:white;
-	font-family:Verdana, sans-serif;
-	font-size:8em;
+	font-size:3em;
 	vertical-align:top;
 	text-align:center;
 	line-height:100vh;
 }
 
+.link {
+	border:solid 6px white;
+	color:white;
+	border-radius:6px;
+	padding:10px;
+	background-color:green;
+}
+
+#buttonPosition {
+	text-align: center;
+	margin:17px;
+}
+
+#restartButton {
+	font-family:Verdana, sans-serif;
+	
+	border: 2px solid #222222;
+	padding: 5px;
+	border-radius:6px;
+	
+	background-color: #BBEEBB;
+	color: #222222;
+}
+
+#makewidthWORK {
+	display:absolute;
+	width:25%;
+	text-align:center;
+	margin: 0 auto;
+}
+
+a:visited {
+	color:black;
+}
+
+a:link {
+  color: black;
+}
+
+.i {
+	font-style:italic;
+}
 
 .rider {
 	background-image:url("images/rider.png");
@@ -42,6 +123,10 @@ body {
 
 .tree {
 	background-image:url("images/tree.png");
+}
+
+.tree2 {
+	background-image:url("images/tree2.png");
 }
 
 .flag {
@@ -54,6 +139,18 @@ body {
 
 .water {
 	background-image:url("images/water.png");
+}
+
+.waterr {
+	background-image:url("images/waterr.png");
+}
+
+.waters {
+	background-image:url("images/waters.png");
+}
+
+.waterc {
+	background-image:url("images/waterc.png");
 }
 
 

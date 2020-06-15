@@ -1,35 +1,63 @@
+/*
+Notes to self: sped up enemy to 600, added keyspam limitation 
+
+todo: swap speeds for without and with rider, add run-up requirement for fence jumping
+
+story: the overweight doofus with the 5-sided hat.
+Spangler keeps getting into trouble
+*/
+
 const levels = [
 
 	// level 1
-	["flag", "rock", "", "" , "",
+	["flag", "tree2", "tree", "" , "waters",
 	"fenceside", "rock", "", "" , "rider",
 	"", "tree", "animate", "animate", "animate",
-	"", "water", "", "", "",
+	"", "waters", "", "", "",
 	"", "fenceup", "", "horseup", ""],
 
-	// level 2 note to self make horse appear properly
-	["flag", "water", "", "", "",
-	"fenceside", "water", "", "", "rider",
+	// level 2
+	["flag", "water", "", "", "tree2",
+	"fenceside", "water", "tree", "", "rider",
 	"animate", "bridge animate", "animate", "animate", "animate",
 	"", "water", "", "", "",
-	"", "water", "horseup", "", ""],
+	"", "water", "horseup", "", "waters"],
 	
 	// level 3
-	["tree", "tree", "flag", "tree", "tree",
+	["tree", "tree2", "flag", "tree2", "tree",
 	"animate", "animate", "animate", "animate", "animate",
-	"water", "bridge", "water", "water", "water",
+	"waterr", "bridge", "waterr", "waterr", "waterr",
 	"", "", "", "", "",
-	"rider", "rock", "tree", "tree", "horseup"]
+	"rider", "rock", "tree", "tree", "horseup"],
+	
+	// level 4
+	["horsedown", "water", "", "tree2", "rider",
+	"", "water", "", "", "",
+	"animate", "bridge animate", "animate", "animate", "",
+	"", "water", "fenceside", "rock", "waters",
+	"", "water", "", "", "flag"],
+	
+	// level 5
+	["flag", "flag", "flag", "flag", "flag",
+	"", "", "", "", "",
+	"fenceside", "fenceside", "fenceside", "fenceside", "fenceside",
+	"animate", "animate", "animate", "animate", "animate",
+	"waters", "rider", "tree", "rock", "horseup"]
+	
 ]; // end of levels
 
 const gridBoxes = document.querySelectorAll("#gameBoard div");
-const noPassObstacles = ["rock", "tree", "water"];
+const noPassObstacles = ["rock", "tree", "tree2", "water", "waterr", "waters", "waterc"];
 
 var currentLevel = 0; // starting level
 var riderOn = false; // is rider on horse?
 var currentLocationOfHorse = 0;
 var currentAnimation; // allows 1 animation per level
-var widthOfBoard =5;
+var widthOfBoard = 5;
+var canMove = true;
+var speed = 150;
+var currentlyJumping = false; // prevent glitched horses from trying to move while jumping
+var haveRunup = [false, false]; //1st is whether there's a runup, 2cnd is whether r-to-l
 
 // start game
 window.addEventListener("load", function () {
@@ -38,28 +66,38 @@ window.addEventListener("load", function () {
 
 // move horse
 document.addEventListener("keydown", function (e) {
-	switch (e.keyCode) {
-		case 37: // left arrow
-			if (currentLocationOfHorse % widthOfBoard !== 0) {
-				tryToMove("left");
-			}
-			break;
-		case 38: // up arrow	
-			if (currentLocationOfHorse - widthOfBoard >= 0) {
-				tryToMove("up");
-			}
-			break;
-		case 39: // right arrow
-			if (currentLocationOfHorse % widthOfBoard < widthOfBoard - 1) {
-				tryToMove("right");
-			}
-			break;		
-		case 40: // down arrow
-			if (currentLocationOfHorse + widthOfBoard < 25) {
-				tryToMove("down");
-			}
-			break;
-	} // switch
+	if (canMove == true && currentlyJumping == false) {
+		switch (e.keyCode) {
+			case 37: // left arrow
+				if (currentLocationOfHorse % widthOfBoard !== 0) {
+					tryToMove("left");
+					canMove = false;
+					setTimeout(function(){canMove = true;}, speed); //can move faster with rider
+				}
+				break;
+			case 38: // up arrow	
+				if (currentLocationOfHorse - widthOfBoard >= 0) {
+					tryToMove("up");
+					canMove = false;
+					setTimeout(function(){canMove = true;}, speed);
+				}
+				break;
+			case 39: // right arrow
+				if (currentLocationOfHorse % widthOfBoard < widthOfBoard - 1) {
+					tryToMove("right");
+					canMove = false;
+					setTimeout(function(){canMove = true;}, speed);
+				}
+				break;		
+			case 40: // down arrow
+				if (currentLocationOfHorse + widthOfBoard < 25) {
+					tryToMove("down");
+					canMove = false;
+					setTimeout(function(){canMove = true;}, speed);
+				}
+				break;
+		} // switch
+	}
 }); // key event listener
 
 function tryToMove (direction) {
@@ -101,11 +139,17 @@ function tryToMove (direction) {
 	// if it's a fence, and there is no rider, don't move
 	if (!riderOn && nextClass.includes("fence")) { return; }
 	
+	if (direction == "left" || direction == "right") {//figure out 4 directions of fence
+		haveRunup = [true, true];
+	}
+	
 	// if there is a fence, move two spaces with animation
 	if (nextClass.includes("fence")) {
 		
 		// horse requires rider to jump
 		if (riderOn) {
+			
+			currentlyJumping = true; // can't move other ways
 			gridBoxes[currentLocationOfHorse].className = "";
 			oldClassName = gridBoxes[nextLocation].className;
 			
@@ -145,11 +189,10 @@ function tryToMove (direction) {
 				// show horse and rider after landing
 				gridBoxes[currentLocationOfHorse].className = nextClass2;
 				
+				currentlyJumping = false; // jump over
+				
 				// next box is a flag, go up a level
 				levelUp(nextClass);
-				
-				
-				
 				
 			}, 350);
 			return;
@@ -158,6 +201,7 @@ function tryToMove (direction) {
 	
 	// if if there is a rider, add rider 
 	if (nextClass == "rider") {
+		speed = 500; // rider heavy
 		riderOn = true;
 	}
 	
@@ -183,7 +227,7 @@ function tryToMove (direction) {
 	
 	// if it is an enemy
 	if (nextClass.includes("enemy")) {
-		document.getElementById("lose").style.display = "block";
+		endGame(false, false);
 		return;
 	}
 	
@@ -195,26 +239,33 @@ function tryToMove (direction) {
 // move up a level
 function levelUp (nextClass) {
 	if (nextClass == "flag" && riderOn) {
-		document.getElementById("levelup").style.display = "block";
 		clearTimeout(currentAnimation);
+		if (currentLevel < 4) {
+			document.getElementById("levelup").style.display = "block";
+			currentLevel++;
+		} else {
+			endGame(true, false); //victory, and not the restart button
+			return;
+		}
 		setTimeout (function() {
-			if (currentLevel < 2) {
-				currentLevel++;
-			} else {
-				document.getElementById("levelup").innerHTML = "You've Won!";
-				return;
-			}
 			document.getElementById("levelup").style.display = "none";
 			loadLevel();
-		}, 1000);
+		}, 2000);
 	}
 }
 
 // loadlevels 0 - maxLevel
 function loadLevel() {
+	document.getElementById("lose").style.display = "none";
+	document.getElementById("levelup").style.display = "none";
+	
+	//remove new game button upon new game starting
+	document.getElementById("levelup").innerHTML = "Enemy Escaped! Onward!"; 
+	
 	let levelMap = levels[currentLevel];
 	let animateBoxes;
 	riderOn = false;
+	speed = 150;
 	
 	// load board
 	for (i = 0; i < gridBoxes.length; i++) {
@@ -234,8 +285,10 @@ index is current location of animation
 direction is current direction of enemy
 */
 function animateEnemy(boxes, index, direction) {
+	let nextPlace = String(boxes[index].className); //where is the enemy next?
+	
 	// exit function if no animation
-	if(boxes.length <= 0) { console.log("none"); return; }
+	if(boxes.length <= 0) {return;}
 	
 	//update images
 	if (direction == "right") {
@@ -251,6 +304,12 @@ function animateEnemy(boxes, index, direction) {
 			boxes[i].classList.remove("enemyleft");
 		} // if
 	} // for
+		
+	// hitting player character
+	if (nextPlace.includes('horse')) {
+		endGame(false, false);
+		return;
+	}
 	
 	// moving right
 	if (direction == "right") {
@@ -261,6 +320,7 @@ function animateEnemy(boxes, index, direction) {
 		} else {
 			index ++;
 		} // else
+			
 	// moving left
 	} else {
 		// turn around if hit left side
@@ -272,5 +332,30 @@ function animateEnemy(boxes, index, direction) {
 		} // else
 	} // else
 	
-	currentAnimation = setTimeout(function () {animateEnemy(boxes, index, direction);}, 750);
+	if (currentLevel == 4 && index == 0) {
+		setTimeout(function () {}, 50);
+	}
+	
+	currentAnimation = setTimeout(function () {animateEnemy(boxes, index, direction);}, 600);
 } // animateEnemy
+
+// go to a appropriate end game screen
+function endGame(victory, isRestart) {
+	
+	clearTimeout(currentAnimation);
+	speed = 150; // normal speed
+	currentLevel = 0; // starting level
+	riderOn = false; // is rider on horse?
+	currentLocationOfHorse = 0;
+	
+	if (isRestart == false) {
+		if (victory) {
+			document.getElementById("levelup").innerHTML = "Zzzzzzzzzzz... (The stable really <span class = 'i'>is</span> comfy.) <span class = 'link' onclick = 'loadLevel()'>Click this for New Game</span>";
+		} else {
+			document.getElementById("lose").style.display = "block";
+		}
+	} else {
+		loadLevel();
+		isRestart = false;
+	}
+}
