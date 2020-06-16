@@ -28,8 +28,6 @@ body {
 }
 
 .instructions {
-	display:absolute;
-	
 	border:solid 2px black;
 	border-radius:13px;
 	padding:5px;
@@ -47,8 +45,6 @@ body {
 }
 
 #startlink {
-	display:absolute;
-	
 	border:solid 2px black;
 	border-radius:13px;
 	padding:5px;
@@ -98,8 +94,7 @@ body {
 	color: #222222;
 }
 
-#makewidthWORK {
-	display:absolute;
+.makewidthWORK {
 	width:25%;
 	text-align:center;
 	margin: 0 auto;
