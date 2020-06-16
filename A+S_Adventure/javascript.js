@@ -1,12 +1,3 @@
-/*
-Notes to self: sped up enemy to 600, added keyspam limitation 
-
-todo: swap speeds for without and with rider, add run-up requirement for fence jumping
-
-story: the overweight doofus with the 5-sided hat.
-Spangler keeps getting into trouble
-*/
-
 const levels = [
 
 	// level 1
@@ -241,9 +232,11 @@ function levelUp (nextClass) {
 	if (nextClass == "flag" && riderOn) {
 		clearTimeout(currentAnimation);
 		if (currentLevel < 4) {
-			document.getElementById("levelup").style.display = "block";
 			currentLevel++;
+			document.getElementById("levelup").style.display = "block";
 		} else {
+			console.log("TEst");
+			document.getElementById("levelup").style.display = "block";
 			endGame(true, false); //victory, and not the restart button
 			return;
 		}
